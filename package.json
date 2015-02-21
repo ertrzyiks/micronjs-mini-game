@@ -1,0 +1,30 @@
+{
+  "name": "micronjs-mini-game",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "micronjs": "^0.0.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.2.1",
+    "gulp": "^3.8.11",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-traceur": "^0.17.0",
+    "run-sequence": "^1.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ertrzyiks/micronjs-mini-game.git"
+  },
+  "author": "ertrzyiks <mateusz.derks@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ertrzyiks/micronjs-mini-game/issues"
+  },
+  "homepage": "https://github.com/ertrzyiks/micronjs-mini-game"
+}
