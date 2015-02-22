@@ -1,20 +1,26 @@
-import {config} from "../app.js";
+import {config} from "../../app.js";
 
 var BLOCKSIZE = config.BLOCKSIZE;
 
 export class Block extends Entity {
     constructor(type, col, row) {
+        super();
+
+        this.hasPlayer = false;
+
         this.type = type;
         this.col = col;
         this.row = row;
+        this.x = col * BLOCKSIZE;
+        this.y = row * BLOCKSIZE;
 
         switch(this.type) {
-            case 'P':
-                this.color = { r: 120, g: 120, b: 120 };
+            case 'D':
+                this.color = { r: 120, g: 120, b: 0 };
                 break;
 
             case 'W':
-                this.color = { r: 0, g: 0, b: 0 };
+                this.color = { r: 0, g: 120, b: 0 };
                 break;
 
             case 'L':
@@ -25,8 +31,8 @@ export class Block extends Entity {
 
     draw() {
         Graphics.drawRect(
-            this.col * BLOCKSIZE,
-            this.row * BLOCKSIZE,
+            this.x,
+            this.y,
             BLOCKSIZE,
             BLOCKSIZE,
             this.color.r,

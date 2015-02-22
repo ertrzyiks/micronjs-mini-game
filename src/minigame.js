@@ -1,60 +1,17 @@
 import {config} from "./app.js";
-
-import {GameMap} from "./map/map.js";
-
-class Player extends Entity {
-    constructor() {
-        super();
-
-        this.speed = 2;
-        this.x = 0;
-        this.y = 0;
-
-        this.color = {
-            r: 255,
-            g: 255,
-            b: 255
-        };
-    }
-
-    moveDown() {
-        this.y += this.speed;
-    }
-
-    moveUp() {
-        this.y -= this.speed;
-    }
-
-    moveLeft() {
-        this.x -= this.speed;
-    }
-
-    moveRight() {
-        this.x += this.speed;
-    }
-
-    draw() {
-        Graphics.drawRect(
-            this.x,
-            this.y,
-            config.PLAYERSIZE,
-            config.PLAYERSIZE,
-            this.color.r,
-            this.color.g,
-            this.color.b,
-            0.5
-        );
-    }
-}
-
+import {GameMap} from "./world/map/map.js";
+import {Player} from "./world/player.js";
 
 class StateGame extends State {
     constructor() {
-        super();
+        this.entities = [];
 
         this.player = new Player();
 
         this.map = new GameMap();
+        this.map.setPlayer(this.player);
+
+        this.add(this.map);
     }
 
     init() {
@@ -78,6 +35,7 @@ class StateGame extends State {
             this.player.moveRight();
         }
 
+        this.map.fixPlayerPosition();
         this.repositionCamera();
     }
 
@@ -111,7 +69,6 @@ class StateGame extends State {
         super.draw();
 
         this.map.draw();
-        this.player.draw();
     }
 }
 
