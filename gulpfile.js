@@ -23,8 +23,7 @@ gulp.task('serve', function () {
     });
 
     gulp.watch(['src/*.html'], reload);
-    gulp.watch(['src/*.js', 'src/**/*.js'], [reload]);
-    gulp.watch(['app/images/**/*'], reload);
+    gulp.watch(['src/*.js', 'src/**/*.js'], reload);
 });
 
 gulp.task('clean', function (cb) {

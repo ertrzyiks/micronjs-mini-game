@@ -1,6 +1,6 @@
 import {config} from "./app.js";
 
-import "./map/map.js";
+import {GameMap} from "./map/map.js";
 
 class Player extends Entity {
     constructor() {
@@ -53,6 +53,8 @@ class StateGame extends State {
         super();
 
         this.player = new Player();
+
+        this.map = new GameMap();
     }
 
     init() {
@@ -75,11 +77,40 @@ class StateGame extends State {
         else if (Input.isKeyPressed(Input.KEY_D)) {
             this.player.moveRight();
         }
+
+        this.repositionCamera();
+    }
+
+    repositionCamera() {
+        var SCREEN_X = 640,
+            SCREEN_Y = 480,
+            SCREEN_X_OFFSET = SCREEN_X / 2,
+            SCREEN_Y_OFFSET = SCREEN_Y / 2;
+
+        Camera.x = this.player.x - SCREEN_X_OFFSET;
+        Camera.y = this.player.y - SCREEN_Y_OFFSET;
+
+        if (this.player.x > (this.map.width - SCREEN_X_OFFSET)) {
+            Camera.x = (this.map.width - SCREEN_X);
+        }
+
+        if (this.player.y > (this.map.height - SCREEN_Y_OFFSET)) {
+            Camera.y = (this.map.height - SCREEN_Y);
+        }
+
+        if (Camera.x < 0) {
+            Camera.x = 0;
+        }
+
+        if (Camera.y < 0) {
+            Camera.y = 0;
+        }
     }
 
     draw() {
         super.draw();
 
+        this.map.draw();
         this.player.draw();
     }
 }
