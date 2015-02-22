@@ -6,13 +6,20 @@
     <style>
         body {background-color:black}
     </style>
+
+    <!-- build:js micron-dist.js -->
     <script src="/node_modules/micronjs/build/base.js"></script>
     <script src="/node_modules/micronjs/build/micron.js"></script>
+    <!-- endbuild-->
 
-    <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
-    <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
 </head>
 <body>
+
+<!-- build:js minigame.js -->
+<script src="/node_modules/traceur/bin/traceur.js"></script>
+<script src="/node_modules/traceur/traceur-compiler/src/bootstrap.js"></script>
 <script>System.import("minigame.js")</script>
+<!-- endbuild-->
+
 </body>
 </html>

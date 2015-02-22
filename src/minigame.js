@@ -1,6 +1,6 @@
-import {config} from "app.js";
+import {config} from "./app.js";
 
-import "map/map.js";
+import "./map/map.js";
 
 class Player extends Entity {
     constructor() {
