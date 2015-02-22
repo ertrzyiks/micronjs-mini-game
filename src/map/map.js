@@ -21,26 +21,13 @@ export class GameMap extends Entity {
             "PPPPPPPPPPPPPPP"
         ];
 
-        this.blocks = this.blocksLayout.map(function (row, rowNum) {
-            var blocks = [];
-
+        this.blocksLayout.map( (row, rowNum)  => {
             for (var colNum = 0; colNum < row.length; colNum++) {
-                blocks.push(new Block(row[colNum], colNum, rowNum));
+                this.add(new Block(row[colNum], colNum, rowNum));
             }
-
-            return blocks;
         });
-
 
         this.width = this.blocksLayout[0].length * BLOCKSIZE;
         this.height = this.blocksLayout.length * BLOCKSIZE;
-    }
-
-    draw() {
-        this.blocks.forEach(function (rowBlocks) {
-            rowBlocks.forEach(function (cellBlock) {
-                cellBlock.draw();
-            });
-        });
     }
 }

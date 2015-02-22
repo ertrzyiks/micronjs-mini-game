@@ -82,8 +82,8 @@ class StateGame extends State {
     }
 
     repositionCamera() {
-        var SCREEN_X = 640,
-            SCREEN_Y = 480,
+        var SCREEN_X = Graphics.width,
+            SCREEN_Y = Graphics.height,
             SCREEN_X_OFFSET = SCREEN_X / 2,
             SCREEN_Y_OFFSET = SCREEN_Y / 2;
 
