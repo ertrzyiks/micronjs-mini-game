@@ -41,11 +41,6 @@ export class GameMap extends Entity {
 
         this.width = this.blocksLayout[0].length * BLOCKSIZE;
         this.height = this.blocksLayout.length * BLOCKSIZE;
-
-        this.debug1Block = new Block('D', 0, 0);
-        this.debug2Block = new Block('D', 0, 0);
-        this.add(this.debug1Block);
-        this.add(this.debug2Block);
     }
 
     setPlayer(player) {
