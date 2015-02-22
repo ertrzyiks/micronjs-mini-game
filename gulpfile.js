@@ -6,15 +6,8 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-gulp.task('traceur', function () {
-    return gulp.src('src/minigame.js')
-        .pipe($.traceur())
-        .pipe($.rename('minigame-compiled.js'))
-        .pipe(gulp.dest('src'));
-});
-
 // Watch Files For Changes & Reload
-gulp.task('serve', ['traceur'], function () {
+gulp.task('serve', function () {
     browserSync({
         notify: false,
         server: {
@@ -26,6 +19,6 @@ gulp.task('serve', ['traceur'], function () {
     });
 
     gulp.watch(['src/*.html'], reload);
-    gulp.watch(['src/minigame.js'], ['traceur', reload]);
+    gulp.watch(['src/*.js', 'src/**/*.js'], [reload]);
     gulp.watch(['app/images/**/*'], reload);
 });
