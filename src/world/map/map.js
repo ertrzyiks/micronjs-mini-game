@@ -8,6 +8,7 @@ export class GameMap extends Entity {
         super();
 
         this.blocks = {};
+        this.lastPlayerPosition = { x: 0, y: 0 };
 
         this.blocksLayout = [
             "WWWWWWWWWWWWWWWWW",
@@ -57,62 +58,126 @@ export class GameMap extends Entity {
         return false;
     }
 
-    fixPlayerPosition() {
+    getNewPlayerPositionX(playerX, playerY) {
         var player = this.player,
-            baseCol2RightBottom = Math.floor((player.x + player.width) / BLOCKSIZE),
-            baseRow2RightBottom = Math.floor((player.y + player.height) / BLOCKSIZE),
-            baseCol2RightTop = Math.floor((player.x + player.width) / BLOCKSIZE),
-            baseRow2RightTop = Math.floor((player.y) / BLOCKSIZE),
+            baseCol2RightBottom, baseRow2RightBottom, baseCol2RightTop, baseRow2RightTop,
+            baseCol2LeftTop, baseRow2LeftTop, baseCol2LeftBottom, baseRow2LeftBottom;
 
-            baseCol2LeftBottom = Math.floor((player.x) / BLOCKSIZE),
-            baseRow2LeftBottom = Math.floor((player.y + player.height) / BLOCKSIZE),
-            baseCol2LeftTop = Math.floor((player.x) / BLOCKSIZE),
-            baseRow2LeftTop = Math.floor((player.y) / BLOCKSIZE);
+        baseCol2RightBottom = Math.floor((playerX + player.width - 1.0) / BLOCKSIZE);
+        baseRow2RightBottom = Math.floor((playerY + player.height - 1.0) / BLOCKSIZE);
+        baseCol2RightTop = Math.floor((playerX + player.width - 1.0) / BLOCKSIZE);
+        baseRow2RightTop = Math.floor((playerY + 1.0) / BLOCKSIZE);
+
+        baseCol2LeftTop = Math.floor((playerX + 1.0) / BLOCKSIZE);
+        baseRow2LeftTop = Math.floor((playerY + 1.0) / BLOCKSIZE);
+        baseCol2LeftBottom = Math.floor((playerX + 1.0) / BLOCKSIZE);
+        baseRow2LeftBottom = Math.floor((playerY + player.height - 1.0) / BLOCKSIZE);
 
         if (player.velocity.x > 0) {
             if(this.canStand(baseRow2RightBottom, baseCol2RightBottom - 1) &&
                 !this.canStand(baseRow2RightBottom, baseCol2RightBottom)) {
-                player.x = (baseCol2RightBottom) * BLOCKSIZE - player.width;
+                return (baseCol2RightBottom) * BLOCKSIZE - player.width;
             }
             else if (this.canStand(baseRow2RightTop, baseCol2RightTop - 1) &&
                 !this.canStand(baseRow2RightTop, baseCol2RightTop)) {
-                player.x = (baseCol2RightTop) * BLOCKSIZE - player.width;
+                return (baseCol2RightTop) * BLOCKSIZE - player.width;
             }
         }
 
         if (player.velocity.x < 0) {
             if(this.canStand(baseRow2LeftBottom, baseCol2LeftBottom + 1) &&
                 !this.canStand(baseRow2LeftBottom, baseCol2LeftBottom)) {
-                player.x = (baseCol2LeftBottom + 1) * BLOCKSIZE;
+                return (baseCol2LeftBottom + 1) * BLOCKSIZE;
+
             }
             else if (this.canStand(baseRow2LeftTop, baseCol2LeftTop + 1) &&
                 !this.canStand(baseRow2LeftTop, baseCol2LeftTop)) {
-                player.x = (baseCol2LeftTop + 1) * BLOCKSIZE;
+                return (baseCol2LeftTop + 1) * BLOCKSIZE;
             }
         }
+
+        return playerX;
+    }
+
+    getNewPlayerPositionY(playerX, playerY) {
+        var player = this.player,
+            baseCol2RightBottom, baseRow2RightBottom, baseCol2RightTop, baseRow2RightTop,
+            baseCol2LeftTop, baseRow2LeftTop, baseCol2LeftBottom, baseRow2LeftBottom;
+
+        baseCol2RightBottom = Math.floor((playerX + player.width - 1.0) / BLOCKSIZE);
+        baseRow2RightBottom = Math.floor((playerY + player.height - 1.0) / BLOCKSIZE);
+        baseCol2RightTop = Math.floor((playerX + player.width - 1.0) / BLOCKSIZE);
+        baseRow2RightTop = Math.floor((playerY + 1.0) / BLOCKSIZE);
+
+        baseCol2LeftTop = Math.floor((playerX + 1.0) / BLOCKSIZE);
+        baseRow2LeftTop = Math.floor((playerY + 1.0) / BLOCKSIZE);
+        baseCol2LeftBottom = Math.floor((playerX + 1.0) / BLOCKSIZE);
+        baseRow2LeftBottom = Math.floor((playerY + player.height - 1.0) / BLOCKSIZE);
 
         if (player.velocity.y > 0) {
             if(this.canStand(baseRow2LeftBottom - 1, baseCol2LeftBottom) &&
                 !this.canStand(baseRow2LeftBottom, baseCol2LeftBottom)) {
-                player.y = (baseRow2LeftBottom) * BLOCKSIZE - player.height;
+                return (baseRow2LeftBottom) * BLOCKSIZE - player.height;
             }
-
             else if(this.canStand(baseRow2RightBottom - 1, baseCol2RightBottom) &&
                 !this.canStand(baseRow2RightBottom, baseCol2RightBottom)) {
-                player.y = (baseRow2RightBottom) * BLOCKSIZE - player.height;
+                return (baseRow2RightBottom) * BLOCKSIZE - player.height;
             }
         }
 
         if (player.velocity.y < 0) {
             if(this.canStand(baseRow2LeftTop + 1, baseCol2LeftTop) &&
                 !this.canStand(baseRow2LeftTop, baseCol2LeftTop)) {
-                player.y = (baseRow2LeftTop + 1) * BLOCKSIZE;
+                return (baseRow2LeftTop + 1) * BLOCKSIZE;
             }
-
             else if(this.canStand(baseRow2RightTop + 1, baseCol2RightTop) &&
                 !this.canStand(baseRow2RightTop, baseCol2RightTop)) {
-                player.y = (baseRow2RightTop + 1) * BLOCKSIZE;
+                return  (baseRow2RightTop + 1) * BLOCKSIZE;
             }
         }
+
+        return playerY;
+    }
+
+    fixPlayerPosition() {
+        var player = this.player,
+            playerX = player.x,
+            playerY = player.y,
+
+            playerX1 = playerX,
+            playerY1 = playerY,
+
+            playerX2 = playerX,
+            playerY2 = playerY;
+
+        playerX1 = this.getNewPlayerPositionX(playerX1, playerY1);
+        playerY1 = this.getNewPlayerPositionY(playerX1, playerY1);
+
+        playerY2 = this.getNewPlayerPositionY(playerX2, playerY2);
+        playerX2 = this.getNewPlayerPositionX(playerX2, playerY2);
+
+        var distance1 = Utils.distance(this.lastPlayerPosition.x, this.lastPlayerPosition.y, playerX1, playerY1);
+        var distance2 = Utils.distance(this.lastPlayerPosition.x, this.lastPlayerPosition.y, playerX2, playerY2);
+
+        if (distance1 < distance2) {
+            playerX = playerX1;
+            playerY = playerY1;
+        } else {
+            playerX = playerX2;
+            playerY = playerY2;
+        }
+
+        if (player.x != playerX) {
+            player.x = playerX;
+            player.velocity.x = 0;
+        }
+
+        if (player.y != playerY) {
+            player.y = playerY;
+            player.velocity.y = 0;
+        }
+
+        this.lastPlayerPosition.x = player.x;
+        this.lastPlayerPosition.y = player.y;
     }
 }

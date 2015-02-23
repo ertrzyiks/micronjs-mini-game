@@ -50,6 +50,14 @@ export class Player extends Entity {
 
         this.velocity.x = this.velocity.x - this.velocity.x * this.friction;
         this.velocity.y = this.velocity.y - this.velocity.y * this.friction;
+
+        if (Math.abs(this.velocity.x) < 10.0) {
+            this.velocity.x = 0.0;
+        }
+
+        if (Math.abs(this.velocity.y) < 10.0) {
+            this.velocity.y = 0.0;
+        }
     }
 
     draw() {
