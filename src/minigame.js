@@ -1,12 +1,16 @@
 import {config} from "./app.js";
 import {GameMap} from "./world/map/map.js";
 import {Player} from "./world/player.js";
+import {HealthBar} from "./world/hud/healthbar.js";
 
 class StateGame extends State {
     constructor() {
         this.entities = [];
 
         this.player = new Player();
+        this.healthBar = new HealthBar(100);
+        this.healthBar.x = 10;
+        this.healthBar.y = 10;
 
         this.map = new GameMap();
         this.map.setPlayer(this.player);
@@ -16,6 +20,7 @@ class StateGame extends State {
 
     init() {
         Camera.fade( {r:0, g:0, b:0, a:1}, {r:0, g:0, b:0, a:0}, 1);
+        Camera.add(this.healthBar);
     }
 
     update(delta) {

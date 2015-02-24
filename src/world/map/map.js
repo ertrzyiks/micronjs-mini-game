@@ -21,7 +21,7 @@ export class GameMap extends Entity {
             "WPPWWWWWWWWWLPPPW",
             "WPPWWWWWWWWWLLLLW",
             "WPPWWWWWWWWWPPPPW",
-            "WPPPPPPPPPPPPPPPW",
+            "WPPWWWWWWWWWPPPPW",
             "WPPPPPPPPPPPPPPPW",
             "WWWWWWWWWWWWWWWWW"
         ];
