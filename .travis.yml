@@ -1,0 +1,23 @@
+language: node_js
+node_js:
+ - "0.10"
+script:
+ - npm test
+
+env:
+  global:
+   - GH_REF: "github.com/ertrzyiks/micronjs-mini-game"
+   - GIT_NAME: "ertrzyiks"
+   - GIT_EMAIL: "mateusz.derks+travis@gmail.com"
+cache:
+  directories:
+    - node_modules
+after_success:
+ - npm run build
+ - cd dist
+ - git init
+ - git config user.name ${GIT_NAME}
+ - git config user.email ${GIT_EMAIL}
+ - git add .
+ - git commit -m "Deployed to Github Pages"
+ - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
