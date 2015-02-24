@@ -17,6 +17,11 @@ export class Player extends Entity {
             y: 0
         };
 
+        this.direction = {
+            x: 0,
+            y: 0
+        };
+
         this.friction = 0.3;
 
         this.speed = 100;
@@ -45,6 +50,9 @@ export class Player extends Entity {
     }
 
     update(delta) {
+        this.direction.x = 0;
+        this.direction.y = 0;
+
         this.x += this.velocity.x * delta;
         this.y += this.velocity.y * delta;
 
@@ -58,6 +66,18 @@ export class Player extends Entity {
         if (Math.abs(this.velocity.y) < 10.0) {
             this.velocity.y = 0.0;
         }
+
+        if (this.velocity.x > 0) {
+            this.direction.x = 1.0;
+        } else if (this.velocity.x < 0) {
+            this.direction.x = -1.0;
+        }
+
+        if (this.velocity.y > 0) {
+            this.direction.y = 1.0;
+        } else if (this.velocity.y < 0) {
+            this.direction.y = -1.0;
+        }
     }
 
     draw() {
@@ -70,6 +90,16 @@ export class Player extends Entity {
             this.color.g,
             this.color.b,
             0.5
+        );
+
+        Graphics.drawCircle(
+            this.x + this.width / 2 + this.direction.x * 2.0,
+            this.y + this.width / 2 + this.direction.y * 2.0,
+            2,
+            0,
+            0,
+            0,
+            1
         );
     }
 }
