@@ -16,15 +16,15 @@ export class Block extends Entity {
 
         switch(this.type) {
             case 'D':
-                this.color = { r: 120, g: 120, b: 0 };
+                this.color = { r: 120/255, g: 120/255, b: 0 };
                 break;
 
             case 'W':
-                this.color = { r: 0, g: 120, b: 0 };
+                this.color = { r: 84/255, g: 16/255, b: 16/255 };
                 break;
 
             case 'L':
-                this.color = { r: 120, g: 0, b: 0 };
+                this.color = { r: 120/255, g: 0, b: 0 };
                 break;
         }
     }

@@ -22,9 +22,9 @@ export class Player extends Entity {
         this.speed = 100;
 
         this.color = {
-            r: 255,
-            g: 255,
-            b: 255
+            r: 20,
+            g: 20,
+            b: 200
         };
     }
 
